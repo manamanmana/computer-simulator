@@ -27,7 +27,7 @@ class Computer
 
   def insert(instruction, operand = nil)
     # instruction arg must be String
-    raise InvalidInstructionType.new unless instruction.is_a?(String)
+    raise InvalidInstructionTypeError.new unless instruction.is_a?(String)
     # Assign Hash of instruction and operand into Memory stack
     @memory_stack[@program_counter] = { instruction: instruction,
                                         operand: operand }
