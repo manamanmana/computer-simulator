@@ -21,10 +21,14 @@ class Computer
   # Public Methods
   #
   def set_address(address)
+    # address arg must be Integer
     raise InvalidAddressTypeError.new unless address.is_a?(Integer)
+    # address is inside memory stack range
     raise InvalidAddressPointerError.new \
       unless address >= 0 && address <= @memory_stack_size - 1
+    # set the address to program counter
     @program_counter = address
+    # return self for method chain
     self
   end
 
