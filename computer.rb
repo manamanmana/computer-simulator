@@ -19,8 +19,21 @@ class Computer
 
   def set_address(address)
     raise InvalidAddressTypeError.new unless address.is_a?(Integer)
-    raise InvalidAddressPointerError.new unless address >= 0 && address <= @memory_stack_size - 1
+    raise InvalidAddressPointerError.new \
+      unless address >= 0 && address <= @memory_stack_size - 1
     @program_counter = address
+    self
+  end
+
+  def insert(instruction, operand = nil)
+    # instruction arg must be String
+    raise InvalidInstructionType.new unless instruction.is_a?(String)
+    # Assign Hash of instruction and operand into Memory stack
+    @memory_stack[@program_counter] = { instruction: instruction,
+                                        operand: operand }
+    # Increment current program counter to next cell
+    @program_counter += 1
+    # return self for method chain
     self
   end
 end
