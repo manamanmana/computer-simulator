@@ -35,4 +35,23 @@ class TCComputer < Test::Unit::TestCase
     @computer.set_address(3)
     assert_equal(3, @computer.program_counter)
   end
+
+  def test_insert
+    @computer.set_address(0)
+    # Returned value of insert is Computer instance itself
+    assert_same(@computer, @computer.insert('PRINT'))
+    # Instruction type must be String
+    assert_raise(InvalidInstructionTypeError) do
+      @computer.insert(0)
+    end
+    # Inserted Instruction must be Hash
+    @computer.set_address(0).insert('PUSH', 1009)
+    assert_equal({ instruction: 'PUSH', operand: 1009 },
+                 @computer.memory_stack[0])
+    # Ensure program counter is incremented
+    @computer.set_address(0).insert('PUSH', 1009)
+    assert_equal(1, @computer.program_counter)
+    @computer.insert('PRINT')
+    assert_equal(2, @computer.program_counter)
+  end
 end
