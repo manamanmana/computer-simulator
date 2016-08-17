@@ -17,6 +17,9 @@ class Computer
     @stack_pointer = @memory_stack_size - 1
   end
 
+  #
+  # Public Methods
+  #
   def set_address(address)
     raise InvalidAddressTypeError.new unless address.is_a?(Integer)
     raise InvalidAddressPointerError.new \
@@ -35,5 +38,17 @@ class Computer
     @program_counter += 1
     # return self for method chain
     self
+  end
+
+  def execute
+    run
+  end
+
+  #
+  # Private Methods
+  #
+  private
+
+  def run
   end
 end
