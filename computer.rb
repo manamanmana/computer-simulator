@@ -1,3 +1,4 @@
+require('./errors')
 #
 # Computer Class which simulates computer
 #
@@ -14,5 +15,12 @@ class Computer
     @program_counter = 0
     # Initial position of stack pointer is at the end of memory stack
     @stack_pointer = @memory_stack_size - 1
+  end
+
+  def set_address(address)
+    raise InvalidAddressTypeError.new unless address.is_a?(Integer)
+    raise InvalidAddressPointerError.new unless address >= 0 && address <= @memory_stack_size - 1
+    @program_counter = address
+    self
   end
 end
