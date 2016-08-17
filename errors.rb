@@ -2,8 +2,9 @@
 # Invalid Address Type Error
 #
 class InvalidAddressTypeError < StandardError
-  def initialize
-    super('Invalid Address Type: Address type must be int.')
+  def initialize(message = nil)
+    message = 'Invalid Address Type: Address type must be int.' if message.nil?
+    super(message)
   end
 end
 
@@ -11,7 +12,20 @@ end
 # Invalid Address Pointer Error
 #
 class InvalidAddressPointerError < StandardError
-  def initialize
-    super('Invalid Address Pointer: Address is out of range on memory stack')
+  def initialize(message = nil)
+    message = 'Invalid Address Pointer: \
+              Address is out of range on memory stack' if message.nil?
+    super(message)
+  end
+end
+
+#
+# Invalid Instruction Type Error
+#
+class InvalidInstructionTypeError < StandardError
+  def initialize(message = nil)
+    message = 'Invalid Instruction Type: \
+              Instruction must be String' if message.nil?
+    super(message)
   end
 end
