@@ -101,4 +101,19 @@ class TCComputer < Test::Unit::TestCase
       @computer.send(:pop)
     end
   end
+
+  def test_print
+    # At first clear up and create a computer again
+    # Program counter should be 0
+    @computer = Computer.new(100)
+    # Call push private method and put 1009 on the stack
+    @computer.send(:push, 1009)
+    @computer.send(:print) # Sould be output 1009 to stdout
+    # Program counter should be 2 after 2 private instructions
+    assert_equal(2, @computer.program_counter)
+    # Stack pointer should be 100 after popped.
+    assert_equal(100, @computer.stack_pointer)
+    # The memory stack cell which is popped should be nil
+    assert_equal(nil, @computer.memory_stack[99])
+  end
 end
