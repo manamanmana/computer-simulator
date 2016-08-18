@@ -54,4 +54,21 @@ class TCComputer < Test::Unit::TestCase
     @computer.insert('PRINT')
     assert_equal(2, @computer.program_counter)
   end
+
+  def test_push
+    # Test raise StackOverFlowError if the next memory stack cell has data
+    @computer.set_address(99).insert('PRINT')
+    assert_raise(StackOverFlowError) do
+      @computer.send(:push, 1)
+    end
+    # Reset the error status
+    @computer = Computer.new(100)
+    # Test the decrement behaviour of stack pointer
+    @computer.send(:push, 100)
+    assert_equal(99, @computer.stack_pointer)
+    # Test the push arg is correctly put on the current stack pointer
+    assert_equal(100, @computer.memory_stack[99])
+    # Test the program counter is incremented
+    assert_equal(1, @computer.program_counter)
+  end
 end

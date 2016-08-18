@@ -29,3 +29,15 @@ class InvalidInstructionTypeError < StandardError
     super(message)
   end
 end
+
+#
+# Stack Over Flow Error
+#
+class StackOverFlowError < StandardError
+  def initialize(message = nil)
+    message = 'Stack Over Flow Error: \
+              data exists at the address \
+              you try to push the value' if message.nil?
+    super(message)
+  end
+end
