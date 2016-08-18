@@ -66,6 +66,26 @@ class Computer
     @program_counter += 1
   end
 
+  def pop
+    # As this method is not direct instruction,
+    # so this does not increment program counter
+
+    # If stack_pointer and memory_stack_size are equal
+    # This means stack_pointer is initial positon
+    # and there is no stacked value in the memory yet.
+    raise EmptyStackError if @stack_pointer == @memory_stack_size
+    # Get the value from current stack pointer position of memory stack
+    stack_value = @memory_stack[@stack_pointer]
+    # raise empty stack error is the gotten value is nil
+    raise EmptyStackError if stack_value.nil?
+    # Assign nil to the memory stack cell at the current stack pointer
+    @memory_stack[@stack_pointer] = nil
+    # Increment stack pointer ==> shrink stack area
+    @stack_pointer += 1
+    # Return the popped value
+    stack_value
+  end
+
   def run
     # @ToDo: Need to implemented
   end
