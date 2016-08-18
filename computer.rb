@@ -53,6 +53,19 @@ class Computer
   #
   private
 
+  def push(arg)
+    # Raise Stack Over Flow Error
+    # if the value of the cell at the current stack_pointer - 1
+    # is not Nil
+    raise StackOverFlowError unless @memory_stack[@stack_pointer - 1].nil?
+    # Decrement stack_pointer address at first
+    @stack_pointer -= 1
+    # Assign the arg value to memory cell at the current stack pointer
+    @memory_stack[@stack_pointer] = arg
+    # Increment program counter because this is a direct instruction.
+    @program_counter += 1
+  end
+
   def run
     # @ToDo: Need to implemented
   end
