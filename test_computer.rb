@@ -116,4 +116,18 @@ class TCComputer < Test::Unit::TestCase
     # The memory stack cell which is popped should be nil
     assert_equal(nil, @computer.memory_stack[99])
   end
+
+  def test_call
+    # At first clear up and create a computer again
+    # Program counter should be 0
+    @computer = Computer.new(100)
+    # call private method must be called with Integer arg
+    assert_raise(InvalidAddressTypeError) do
+      @computer.send(:call, 'hoge')
+    end
+    # Execute call() private method with arg 55.
+    @computer.send(:call, 55)
+    # program counter should be 55
+    assert_equal(55, @computer.program_counter)
+  end
 end
