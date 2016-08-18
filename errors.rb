@@ -41,3 +41,14 @@ class StackOverFlowError < StandardError
     super(message)
   end
 end
+
+#
+# Empty Stack Error
+#
+class EmptyStackError < StandardError
+  def initialize(message = nil)
+    message = 'Empty Stack Error: \
+              Stack is totally empty or popped value is nil' if message.nil?
+    super(message)
+  end
+end
