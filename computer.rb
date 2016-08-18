@@ -98,6 +98,24 @@ class Computer
     @program_counter = arg
   end
 
+  def mult
+    arg1 = pop
+    arg2 = pop
+    raise InvalidMultArgTypeError.new unless arg1.is_a?(Integer) &&
+                                             arg2.is_a?(Integer)
+    push(arg1 * arg2)
+    # Doesn't increment program counter because push() increment it
+  end
+
+  def ret
+    # Pop the address from stack
+    address = pop
+    # Raise InvalidAddressTypeError if address is not Integer
+    raise InvalidAddressTypeError.new unless address.is_a?(Integer)
+    # Set the popped address to program counter
+    @program_counter = address
+  end
+
   def run
     # @ToDo: Need to implemented
   end
