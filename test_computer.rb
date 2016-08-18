@@ -71,4 +71,34 @@ class TCComputer < Test::Unit::TestCase
     # Test the program counter is incremented
     assert_equal(1, @computer.program_counter)
   end
+
+  def test_pop
+    # At first clear up and create a computer again
+    @computer = Computer.new(100)
+    # At the inital stack is all emoty,
+    # so EmptyStackError is raised if pop is called
+    assert_raise(EmptyStackError) do
+      @computer.send(:pop)
+    end
+    # push the values
+    @computer.send(:push, 100) # stack_pointer should be 99
+    @computer.send(:push, 200) # stack_pointer should be 98
+    # The first popped value mast be 200
+    assert_equal(200, @computer.send(:pop))
+    # Ensure popped memory stack area is nil
+    assert_equal(nil, @computer.memory_stack[98])
+    # Current stack pointer should be 99
+    assert_equal(99, @computer.stack_pointer)
+    # The second popped value mast be 100
+    assert_equal(100, @computer.send(:pop))
+    # Ensure popped memory stack area is nil
+    assert_equal(nil, @computer.memory_stack[99])
+    # Current stack pointer should be 99
+    assert_equal(100, @computer.stack_pointer)
+    # push the value again
+    @computer.send(:push, nil)
+    assert_raise(EmptyStackError) do
+      @computer.send(:pop)
+    end
+  end
 end
