@@ -92,6 +92,12 @@ class Computer
     @program_counter += 1
   end
 
+  def call(arg)
+    # If arg of call method is not Integer, raise InvalidAddressTypeError
+    raise InvalidAddressTypeError.new unless arg.is_a?(Integer)
+    @program_counter = arg
+  end
+
   def run
     # @ToDo: Need to implemented
   end
