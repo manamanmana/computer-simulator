@@ -130,4 +130,53 @@ class TCComputer < Test::Unit::TestCase
     # program counter should be 55
     assert_equal(55, @computer.program_counter)
   end
+
+  def test_mult
+    # At first clear up and create a computer again
+    # Program counter should be 0
+    @computer = Computer.new(100)
+    @computer.send(:push, 'hoge')
+    @computer.send(:push, 101)
+    # Raise InvalidMultArgTypeError
+    # because one of pushed stack value is not integer
+    assert_raise(InvalidMultArgTypeError) do
+      @computer.send(:mult)
+    end
+    # Clear and recreate computer again
+    # Program counter sould be 0 again
+    @computer = Computer.new(100)
+    # Push the 2 Integer into the stack
+    @computer.send(:push, 10)
+    @computer.send(:push, 101)
+    # Execute mult
+    @computer.send(:mult)
+    # Mult result should be at the end of memory stack(99)
+    assert_equal(1010, @computer.memory_stack[99])
+    assert_equal(nil, @computer.memory_stack[98])
+    # Program counter should be 3 because of 3 direct instructions
+    assert_equal(3, @computer.program_counter)
+  end
+
+  def test_ret
+    # At first clear up and create a computer again
+    # Program counter should be 0
+    @computer = Computer.new(100)
+    # Set the STOP instruction at the program counter 10
+    @computer.set_address(10).insert('STOP')
+    # Push the String into stack
+    @computer.send(:push, 'hoge')
+    assert_raise(InvalidAddressTypeError) do
+      @computer.send(:ret)
+    end
+    # Push the next Integer value into stack
+    @computer.send(:push, 10)
+    # Execute ret private method
+    @computer.send(:ret)
+    # Current program counter should be 10
+    assert_equal(10, @computer.program_counter)
+    # Current instruction should be 'STOP'
+    program_counter = @computer.program_counter
+    assert_equal('STOP',
+                 @computer.memory_stack[program_counter][:instruction])
+  end
 end
