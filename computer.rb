@@ -13,8 +13,8 @@ class Computer
     @memory_stack_size = computer_memory_size
     # Initial position of program counter is at the first of memory stack
     @program_counter = 0
-    # Initial position of stack pointer is at the end of memory stack
-    @stack_pointer = @memory_stack_size - 1
+    # Initial position of stack pointer is at the end of memory stack + 1
+    @stack_pointer = @memory_stack_size
   end
 
   #
