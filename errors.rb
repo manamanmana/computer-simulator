@@ -52,3 +52,14 @@ class EmptyStackError < StandardError
     super(message)
   end
 end
+
+#
+# Invalid Mult Arg Type Error
+#
+class InvalidMultArgTypeError < StandardError
+  def initialize(message = nil)
+    message = 'Invalid Mult Arg Type Error: \
+              Args for mult instruction must be Integer' if message.nil?
+    super(message)
+  end
+end
