@@ -86,6 +86,12 @@ class Computer
     stack_value
   end
 
+  def print
+    puts(pop)
+    # Increment program counter because this is direct instruction
+    @program_counter += 1
+  end
+
   def run
     # @ToDo: Need to implemented
   end
