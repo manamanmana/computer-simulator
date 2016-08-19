@@ -63,3 +63,14 @@ class InvalidMultArgTypeError < StandardError
     super(message)
   end
 end
+
+#
+# Unknown Instruction Error
+#
+class UnknownInstructionError < StandardError
+  def initialize(instruction, message = nil)
+    message = "Unknown Instruction Error: \
+              instruction #{instruction} unknown." if message.nil?
+    super(message)
+  end
+end
