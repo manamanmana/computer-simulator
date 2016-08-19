@@ -117,6 +117,27 @@ class Computer
   end
 
   def run
-    # @ToDo: Need to implemented
+    # Program execution loop
+    while @program_counter < @memory_stack_size
+      program_data = @memory_stack[@program_counter]
+      instruction = program_data[:instruction]
+      operand = program_data[:operand]
+      case instruction
+      when 'PUSH'
+        push(operand)
+      when 'PRINT'
+        print
+      when 'CALL'
+        call(operand)
+      when 'MULT'
+        mult
+      when 'RET'
+        ret
+      when 'STOP'
+        break
+      else
+        raise UnknownInstructionError.new(instruction)
+      end
+    end
   end
 end
