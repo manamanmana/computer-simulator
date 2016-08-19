@@ -24,8 +24,9 @@ class Computer
     # address arg must be Integer
     raise InvalidAddressTypeError.new unless address.is_a?(Integer)
     # address is inside memory stack range
-    raise InvalidAddressPointerError.new \
-      unless address >= 0 && address <= @memory_stack_size - 1
+    unless address >= 0 && address < @memory_stack_size
+      raise InvalidAddressPointerError.new
+    end
     # set the address to program counter
     @program_counter = address
     # return self for method chain
