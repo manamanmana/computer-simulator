@@ -179,4 +179,39 @@ class TCComputer < Test::Unit::TestCase
     assert_equal('STOP',
                  @computer.memory_stack[program_counter][:instruction])
   end
+
+  def test_run
+    # At first clear up and create a computer again
+    # Program counter should be 0
+    @computer = Computer.new(100)
+    # Insert invalid instruction into program stack
+    @computer.set_address(0).insert('PUSH', 10).insert('HOGE')
+    @computer.set_address(0)
+    assert_raise(UnknownInstructionError) do
+      @computer.send(:run)
+    end
+    # Reset the computer
+    @computer = Computer.new(100)
+    # Insert function 3 instructions from program counter 50 => 50, 51, 52
+    @computer.set_address(50).insert('MULT').insert('PRINT').insert('RET')
+    # Insert main 7 instructions from program counter 0
+    # => 0: PUSH, 1019
+    # => 1: PRINT
+    # => 2: PUSH, 6
+    # => 3: PUSH, 102
+    # => 4: PUSH, 10
+    # => 5: CALL, 50
+    # => 6: STOP
+    @computer.set_address(0).insert('PUSH', 1019).insert('PRINT')
+    @computer.insert('PUSH', 6)
+    @computer.insert('PUSH', 102).insert('PUSH', 10).insert('CALL', 50)
+    @computer.insert('STOP')
+    @computer.set_address(0)
+    @computer.send(:run) # This prints 1019 and 1020 on stdout
+    # After program run, program counter should be 6
+    assert_equal(6, @computer.program_counter)
+    # After program run, all the stack values are popped
+    # so the stack pointer should be 100
+    assert_equal(100, @computer.stack_pointer)
+  end
 end
