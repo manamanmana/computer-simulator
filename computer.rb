@@ -102,8 +102,9 @@ class Computer
   def mult
     arg1 = pop
     arg2 = pop
-    raise InvalidMultArgTypeError.new unless arg1.is_a?(Integer) &&
-                                             arg2.is_a?(Integer)
+    unless arg1.is_a?(Integer) && arg2.is_a?(Integer)
+      raise InvalidMultArgTypeError.new
+    end
     push(arg1 * arg2)
     # Doesn't increment program counter because push() increment it
   end
